@@ -21,15 +21,26 @@ function draw_board()
 
   hex_height = 50
   line_length = 10
-  colors = { {0, 0, 0}, {255, 255, 255}, {255, 0, 0} }
+  black = {0,0,0}
+  white = {255,255,255}
+  red   = {255,0,0}
+  colors = { white, red, black }
+  color_counter = 1
 
   -- foreach hex, draw the hex
   for x=1,12 do
+    if math.mod(x, 2) == 0 then
+      color_counter = 2
+    else
+      color_counter = 3
+    end
+
     for y=1,12 do
       if board[x][y] then
         -- print(math.mod(x, 3))
         -- print(colors[math.mod(x, 3) + 1])
-        love.graphics.setColor(colors[math.mod(x, 3) + 1])
+        love.graphics.setColor(colors[math.mod(color_counter, 3) + 1])
+        color_counter = color_counter + 1
 
         if math.mod(x,2) == 0 then
           vertical_offset = hex_height / 2
@@ -68,7 +79,7 @@ function draw_board()
           left_top.x, left_top.y, left_point.x, left_point.y)
 
         love.graphics.setColor( 100, 100, 100 )
-        love.graphics.print(x .. " " .. y, base_x, base_y)
+        love.graphics.print(x .. " " .. y, base_x -10, base_y)
       end
     end
   end
