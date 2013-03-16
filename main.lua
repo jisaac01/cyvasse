@@ -29,19 +29,13 @@ function draw_board()
       if board[x][y] then
         -- print(math.mod(x, 3))
         -- print(colors[math.mod(x, 3) + 1])
-        love.graphics.setColor(colors[math.mod(y, 3) + 1])
+        love.graphics.setColor(colors[math.mod(x, 3) + 1])
 
         if math.mod(x,2) == 0 then
           vertical_offset = hex_height / 2
         else
           vertical_offset = 0
         end
-
-        -- if math.mod(x,2) == 0 then
-        --   horizontal_offset = -hex_height / 4
-        -- else
-        --   horizontal_offset = 0
-        -- end
 
         base_x = (x * hex_height * .75)
         base_y = (y * hex_height) + vertical_offset
