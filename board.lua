@@ -1,11 +1,3 @@
-function reset_color_counter(x)
-  if math.mod(x, 2) == 0 then
-    return 2
-  else
-    return 3
-  end
-end
-
 function init_board()
   hex_height = 50
   hex_width_factor = .75
@@ -14,45 +6,51 @@ function init_board()
   for x=1,13 do
     board[x] = {}
 
-    color_counter = reset_color_counter(x)
+    local color_counter = reset_color_counter(x)
 
     for y=1,13 do
-      coords = base_coords({x=x, y=y}, hex_height, hex_width_factor)
+      local coords = base_coords({x=x, y=y}, hex_height, hex_width_factor)
 
       if point_is_within_hexagon_borders(hex_height, hex_width_factor, coords) then
-        board[x][y] = {}
-
-        board[x][y].color = colors[math.mod(color_counter, 3) + 1]
-        board[x][y].coords = coords
-
-        board[x][y].left_point = {}
-        board[x][y].left_point.x = coords.x - hex_height / 2
-        board[x][y].left_point.y = coords.y
-
-        board[x][y].left_top = {}
-        board[x][y].left_top.x = coords.x - hex_height / 4
-        board[x][y].left_top.y = coords.y - hex_height / 2
-
-        board[x][y].left_bottom = {}
-        board[x][y].left_bottom.x = coords.x - hex_height / 4
-        board[x][y].left_bottom.y = coords.y + hex_height / 2
-
-        board[x][y].right_top = {}
-        board[x][y].right_top.x = coords.x + hex_height / 4
-        board[x][y].right_top.y = coords.y - hex_height / 2
-
-        board[x][y].right_bottom = {}
-        board[x][y].right_bottom.x = coords.x + hex_height / 4
-        board[x][y].right_bottom.y = coords.y + hex_height / 2
-
-        board[x][y].right_point = {}
-        board[x][y].right_point.x = coords.x + hex_height / 2
-        board[x][y].right_point.y = coords.y
+        board[x][y] = init_hex(color_counter, coords)
       end
 
       color_counter = color_counter + 1
     end
   end
+end
+
+function init_hex(color_counter, coords)
+  hex = {}
+
+  hex.color = colors[math.mod(color_counter, 3) + 1]
+  hex.coords = coords
+
+  hex.left_point = {}
+  hex.left_point.x = coords.x - hex_height / 2
+  hex.left_point.y = coords.y
+
+  hex.left_top = {}
+  hex.left_top.x = coords.x - hex_height / 4
+  hex.left_top.y = coords.y - hex_height / 2
+
+  hex.left_bottom = {}
+  hex.left_bottom.x = coords.x - hex_height / 4
+  hex.left_bottom.y = coords.y + hex_height / 2
+
+  hex.right_top = {}
+  hex.right_top.x = coords.x + hex_height / 4
+  hex.right_top.y = coords.y - hex_height / 2
+
+  hex.right_bottom = {}
+  hex.right_bottom.x = coords.x + hex_height / 4
+  hex.right_bottom.y = coords.y + hex_height / 2
+
+  hex.right_point = {}
+  hex.right_point.x = coords.x + hex_height / 2
+  hex.right_point.y = coords.y
+
+  return hex
 end
 
 function draw_board()
@@ -131,4 +129,13 @@ function base_coords(point, hex_height, hex_width_factor)
   base_y = (point.y * hex_height) + vertical_offset
   return {x=base_x, y=base_y}
 end
+
+function reset_color_counter(x)
+  if math.mod(x, 2) == 0 then
+    return 2
+  else
+    return 3
+  end
+end
+
 
