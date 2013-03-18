@@ -1,18 +1,20 @@
+function reset_color_counter(x)
+  if math.mod(x, 2) == 0 then
+    return 2
+  else
+    return 3
+  end
+end
+
 function init_board()
   hex_height = 50
   hex_width_factor = .75
-
-  color_counter = 1
 
   board = {}
   for x=1,13 do
     board[x] = {}
 
-    if math.mod(x, 2) == 0 then
-      color_counter = 2
-    else
-      color_counter = 3
-    end
+    color_counter = reset_color_counter(x)
 
     for y=1,13 do
       coords = base_coords({x=x, y=y}, hex_height, hex_width_factor)
