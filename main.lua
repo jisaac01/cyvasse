@@ -1,6 +1,6 @@
 require 'utils'
 require 'board'
-require 'piece'
+-- require 'piece'
 require 'pieces'
 require 'gutter'
 
@@ -47,3 +47,26 @@ function love.draw()
     draw_pieces()
 end
 
+function love.mousepressed(x, y, button)
+  if button == "l" then
+    for i, p in ipairs(pieces) do
+
+      if x > p.coords.x and x < p.coords.x + p.width
+         and y > p.coords.y and y < p.coords.y + p.height
+      then
+        p.dragging.active = true
+        p.dragging.diffX = x - p.coords.x
+        p.dragging.diffY = y - p.coords.y
+      end
+    end
+  end
+
+end
+
+function love.mousereleased(x, y, button)
+  if button == "l" then
+    for i, p in ipairs(pieces) do
+      p.dragging.active = false
+    end
+  end
+end
