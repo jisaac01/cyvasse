@@ -38,6 +38,8 @@ function init_window()
 
   love.graphics.setCaption( "Cyvasse" )
   love.graphics.setMode( window_width, window_height )
+
+  current_draggable = nil
 end
 
 function love.draw()
@@ -51,12 +53,14 @@ function love.mousepressed(x, y, button)
   if button == "l" then
     for i, p in ipairs(pieces) do
 
-      if x > p.coords.x and x < p.coords.x + p.width
-         and y > p.coords.y and y < p.coords.y + p.height
+      if current_draggable == nil
+        and x > p.coords.x and x < p.coords.x + p.width
+        and y > p.coords.y and y < p.coords.y + p.height
       then
         p.dragging.active = true
         p.dragging.diffX = x - p.coords.x
         p.dragging.diffY = y - p.coords.y
+        current_draggable = p
       end
     end
   end
@@ -67,6 +71,7 @@ function love.mousereleased(x, y, button)
   if button == "l" then
     for i, p in ipairs(pieces) do
       p.dragging.active = false
+      current_draggable = nil
     end
   end
 end
