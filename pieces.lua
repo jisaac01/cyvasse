@@ -14,18 +14,20 @@ function init_pieces()
   pieces = {}
 
   local mountain = table.copy(piece_prototypes.mountain)
-  mountain.cubby_coords = {1,2}
+  mountain.cubby_coords = {x=1,y=2}
   mountain.player = 1
   table.insert(pieces, mountain)
 
   local elephant = table.copy(piece_prototypes.elephant)
-  elephant.cubby_coords = {2,2}
+  elephant.cubby_coords = {x=2,y=2}
   elephant.player = 1
   table.insert(pieces, elephant)
 end
 
+
+
 function draw_pieces()
-  for i, piece in ipairs(pieces) do
-    love.graphics.drawq(sprites, piece.quad, 50 * i, 50)
+  for i, p in ipairs(pieces) do
+    love.graphics.drawq(sprites, p.quad, piece.current_coords(p).x, 50)
   end
 end

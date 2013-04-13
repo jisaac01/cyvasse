@@ -1,58 +1,49 @@
+require 'utils'
 require 'board'
+require 'piece'
+require 'pieces'
+require 'gutter'
 
 function love.load()
-  love.graphics.setCaption( "Cyvasse" )
-  love.graphics.setMode( 525, 700 )
-
   sprites = love.graphics.newImage("images/sprites.png")
-
 
   black = {0,0,0}
   white = {255,255,255}
   red   = {255,0,0}
+  grey  = {100,100,100}
   colors = { white, red, black }
 
+  init_window()
   init_board()
+
   init_piece_prototypes()
   init_pieces()
 end
 
-function init_piece_prototypes()
-  piece_prototypes = {}
+function init_window()
+  hex_height = 50
+  hex_width_factor = .75
 
-  local elephant = {}
-  elephant.quad = love.graphics.newQuad(0, 0, 64, 64, 64, 128)
-  piece_prototypes.elephant = elephant
+  board_x_offset = hex_height / 2
+  board_y_offset = hex_height * hex_width_factor / 2
+  board_width = hex_height * 13 * hex_width_factor + 2 * board_x_offset
+  board_height = hex_height * 13 + 2 * board_y_offset
 
-  local mountain = {}
-  mountain.quad = love.graphics.newQuad(0, 65, 64, 64, 64, 128)
-  piece_prototypes.mountain = mountain
-end
+  gutter_x_offset = board_width
+  gutter_y_offset = 0
+  gutter_width = hex_height * 4
 
-function init_pieces()
-  pieces = {}
+  window_height = board_height
+  window_width = board_width + gutter_width
 
-  table.insert(pieces, table.copy(piece_prototypes.elephant))
-  table.insert(pieces, table.copy(piece_prototypes.mountain))
-end
-
-function table.copy(t)
-  local new_table = {}
-  for k,v in pairs(t) do
-    new_table[k] = v
-  end
-  return new_table
-end
-
-function draw_pieces()
-  for i, piece in ipairs(pieces) do
-    love.graphics.drawq(sprites, piece.quad, 50 * i, 50)
-  end
+  love.graphics.setCaption( "Cyvasse" )
+  love.graphics.setMode( window_width, window_height )
 end
 
 function love.draw()
-    love.graphics.setBackgroundColor( 100, 100, 100 )
+    love.graphics.setBackgroundColor(grey)
     draw_board()
+    draw_gutter()
     draw_pieces()
 end
 

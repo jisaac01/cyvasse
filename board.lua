@@ -1,7 +1,4 @@
 function init_board()
-  hex_height = 50
-  hex_width_factor = .75
-
   board = {}
   for x=1,13 do
     board[x] = {}
@@ -9,9 +6,9 @@ function init_board()
     local color_counter = reset_color_counter(x)
 
     for y=1,13 do
-      local coords = base_coords({x=x, y=y}, hex_height, hex_width_factor)
+      local coords = base_coords({x=x, y=y})
 
-      if point_is_within_hexagon_borders(hex_height, hex_width_factor, coords) then
+      if point_is_within_hexagon_borders(coords) then
         board[x][y] = init_hex(color_counter, coords)
       end
 
@@ -85,13 +82,13 @@ function draw_board()
   end
 end
 
-function point_is_within_hexagon_borders(hex_height, hex_width_factor, point)
-  top = base_coords({ x=7, y=1 }, hex_height, hex_width_factor)
-  right_top = base_coords({ x=13, y=4 }, hex_height, hex_width_factor)
-  right_bottom = base_coords({ x=13, y=10 }, hex_height, hex_width_factor)
-  bottom = base_coords({ x=7, y=13 }, hex_height, hex_width_factor)
-  left_bottom = base_coords({ x=1, y=10 }, hex_height, hex_width_factor)
-  left_top = base_coords({ x=1, y=4 }, hex_height, hex_width_factor)
+function point_is_within_hexagon_borders(point)
+  top = base_coords({ x=7, y=1 })
+  right_top = base_coords({ x=13, y=4 })
+  right_bottom = base_coords({ x=13, y=10 })
+  bottom = base_coords({ x=7, y=13 })
+  left_bottom = base_coords({ x=1, y=10 })
+  left_top = base_coords({ x=1, y=4 })
 
   if is_left_of_line(top, right_top, point) and
      is_left_of_line(right_top, right_bottom, point) and
@@ -118,15 +115,15 @@ function is_right_of_line(point_a, point_b, point_c)
   return gt_lt_line(point_a, point_b, point_c) <= 0
 end
 
-function base_coords(point, hex_height, hex_width_factor)
+function base_coords(point)
   if math.mod(point.x,2) == 0 then
-    vertical_offset = hex_height / 2
-  else
     vertical_offset = 0
+  else
+    vertical_offset = -hex_height / 2
   end
 
-  base_x = (point.x * hex_height * hex_width_factor)
-  base_y = (point.y * hex_height) + vertical_offset
+  base_x = (point.x * hex_height * hex_width_factor) - (hex_height / 4) + board_x_offset
+  base_y = (point.y * hex_height) + vertical_offset + board_y_offset
   return {x=base_x, y=base_y}
 end
 

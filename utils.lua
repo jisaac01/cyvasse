@@ -5,3 +5,6 @@ function table.copy(t)
   end
   return new_table
 end
+
+pretty = require 'pl.pretty'
+-- print(pretty.write(piece.current_coords(p)))
