@@ -63,8 +63,6 @@ function init_gutter_icons()
   insert_icon(gutter_icons, "Trebuchet", 10, 11)
 
   set_icon_coords()
-
--- print(pretty.write(setup_pieces))
 end
 
 function set_coords(piece, player, coords)

@@ -1,7 +1,7 @@
 require 'utils'
 require 'board'
--- require 'piece'
 require 'pieces'
+require 'gutter_icons'
 require 'gutter'
 
 function love.load()
@@ -16,8 +16,10 @@ function love.load()
   init_window()
   init_board()
 
+  init_gutter_icons()
   init_piece_prototypes()
   init_pieces()
+  draggable_pieces = {gutter_icons, pieces}
 end
 
 function init_window()
@@ -50,17 +52,20 @@ function love.draw()
 end
 
 function love.mousepressed(x, y, button)
-  if button == "l" then
-    for i, p in ipairs(pieces) do
 
-      if current_draggable == nil
-        and x > p.coords.x and x < p.coords.x + p.width
-        and y > p.coords.y and y < p.coords.y + p.height
-      then
-        p.dragging.active = true
-        p.dragging.diffX = x - p.coords.x
-        p.dragging.diffY = y - p.coords.y
-        current_draggable = p
+  if button == "l" then
+    for j, d in ipairs(draggable_pieces) do
+      for i, p in ipairs(d) do
+
+        if current_draggable == nil
+          and x > p.coords.x and x < p.coords.x + p.width
+          and y > p.coords.y and y < p.coords.y + p.height
+        then
+          p.dragging.active = true
+          p.dragging.diffX = x - p.coords.x
+          p.dragging.diffY = y - p.coords.y
+          current_draggable = p
+        end
       end
     end
   end
