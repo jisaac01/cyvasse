@@ -38,8 +38,8 @@ function init_window()
   window_height = board_height
   window_width = board_width + gutter_width
 
-  love.graphics.setCaption( "Cyvasse" )
-  love.graphics.setMode( window_width, window_height )
+  love.window.setTitle( "Cyvasse" )
+  love.window.setMode( window_width, window_height )
 
   current_draggable = nil
 end
@@ -54,17 +54,17 @@ end
 function love.mousepressed(x, y, button)
 
   if button == "l" then
-    for j, d in ipairs(draggable_pieces) do
-      for i, p in ipairs(d) do
+    for j, draggables in ipairs(draggable_pieces) do
+      for i, draggable in ipairs(draggables) do
 
-        if current_draggable == nil
-          and x > p.coords.x and x < p.coords.x + p.width
-          and y > p.coords.y and y < p.coords.y + p.height
+        if currently_dragging == nil
+          and x > draggable.coords.x and x < draggable.coords.x + draggable.width
+          and y > draggable.coords.y and y < draggable.coords.y + draggable.height
         then
-          p.dragging.active = true
-          p.dragging.diffX = x - p.coords.x
-          p.dragging.diffY = y - p.coords.y
-          current_draggable = p
+          draggable.dragging.active = true
+          draggable.dragging.diffX = x - draggable.coords.x
+          draggable.dragging.diffY = y - draggable.coords.y
+          currently_dragging = draggable
         end
       end
     end

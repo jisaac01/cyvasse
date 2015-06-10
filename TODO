@@ -1,0 +1,18 @@
+TODO
+
+images for pieces
+
+dragging from the gutter makes pieces
+  - loose pieces snap back to gutter
+  - pieces snap to board
+  - pieces don't snap on other pieces
+
+clean up gutter
+  - pieces for each side
+
+dragging pieces only allowed to valid squares
+
+pretty up the board
+  - make hexes symmetrical
+  - pretty colors
+make window resizeable

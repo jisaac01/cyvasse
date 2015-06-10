@@ -46,10 +46,22 @@ local function set_icon_coords()
                 y= gutter_y_offset + 10 * standard_piece.height})
 end
 
-
 function init_gutter_icons()
   gutter_icons = {}
 
+  -- Can't remember exactly what I was doing here, but it looks better
+  -- sprite_locations = {}
+  -- sprite_locations["Mountain"] = { gutter = { row=11 }, actual = { row=1 } }
+  -- sprite_locations["Fortress"] = { gutter = { row=12 }, actual = { row=2 } }
+  -- sprite_locations["Elephant"] = { gutter = { row=13 }, actual = { row=3 } }
+  -- sprite_locations["Dragon"]   = { gutter = { row=14 }, actual = { row=4 } }
+  -- sprite_locations["King"]     = { gutter = { row=15 }, actual = { row=5 } }
+  -- sprite_locations["Rabble"]   = { gutter = { row=16 }, actual = { row=6 } }
+  -- sprite_locations["Light Horse"] = { gutter = { row=17 }, actual = { row=7 } }
+  -- sprite_locations["Spearman"] = { gutter = { row=18 }, actual = { row=8 } }
+  -- sprite_locations["Archer"]   = { gutter = { row=19 }, actual = { row=9 } }
+  -- sprite_locations["Heavy Horse"] = { gutter = { row=20 }, actual = { row=10 } }
+  -- sprite_locations["Trebuchet"] = { gutter = { row=21 }, actual = { row=11 } }
   insert_icon(gutter_icons, "Mountain", 0, 11)
   insert_icon(gutter_icons, "Fortress", 1, 11)
   insert_icon(gutter_icons, "Elephant", 2, 11)
@@ -75,6 +87,12 @@ end
 
 function draw_gutter_icons()
   for i, p in ipairs(gutter_icons) do
-    love.graphics.drawq(sprites, p.quad, p.coords.x, p.coords.y, 0, .5, .5)
+    -- love.graphics.drawq( image, quad, x, y, r, sx, sy, ox, oy, kx, ky )
+    -- love.graphics.draw( drawable, x, y, r, sx, sy, ox, oy, kx, ky )
+    love.graphics.draw(sprites, p.quad, p.coords.x, p.coords.y, 0, .5, .5)
   end
+end
+
+function init_piece_from_gutter(gutter_icon)
+  insert_icon(gutter_icons)
 end

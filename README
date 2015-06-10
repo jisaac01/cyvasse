@@ -1,0 +1,8 @@
+Running Cyvasse:
+
+Install Love (v 0.9.2)
+run the folder containing main.lua (/Applications/love.app/Contents/MacOS/love "cyvasse")
+
+Notes:
+Penlight (utilities library) is located at 
+/usr/local/share/lua/5.1/pl
